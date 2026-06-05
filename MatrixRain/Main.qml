@@ -28,7 +28,14 @@ Pane {
             anchors.fill: parent
             z: 0
         }
-        // SLOT-CLOCK
+        ClockBox {
+            id: clockBox
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.leftMargin: 40
+            anchors.topMargin: 40
+            z: 1
+        }
         LoginForm {
             id: loginForm
             anchors.centerIn: parent
