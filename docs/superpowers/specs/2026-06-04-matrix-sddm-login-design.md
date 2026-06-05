@@ -57,8 +57,8 @@ El tema debe ser un greeter SDDM **completamente funcional** (no solo una maquet
 └─────────────────────────────────────────────┘
 ```
 
-- **Login box (centro):** foco principal, brillo pleno. Cabecera `root@arch:~$ login` (con "login" en blanco). Filas `user` y `pass` con etiqueta fija a la izquierda y campo que se estira a todo el ancho disponible (flex/Layout). Pie con guiño `[ wake up, Neo... ]`.
-- **Clock box (arriba-izquierda):** misma estética terminal, **más pequeña y atenuada (~75% opacidad)** para no robar foco. Hora `HH:MM` grande + línea `DÍA DD MES · HYPRLAND`.
+- **Login box (centro):** foco principal, brillo pleno. Cabecera `root@arch:~$ login` (con "login" en blanco). Filas `user` y `pass` con etiqueta fija a la izquierda y campo que se estira a todo el ancho disponible (flex/Layout). Pie con guiño `[ wake up, Neo... ]`. **Estos textos son FIJOS en v1** (definidos como propiedades QML con valor por defecto), estructurados para promoverse a `theme.conf` sin refactor cuando se quieran hacer configurables.
+- **Clock box (arriba-izquierda):** misma estética terminal, **más pequeña y atenuada (~75% opacidad)** para no robar foco. Hora **`HH:mm` (24h)** grande + línea `DÍA DD MES · HYPRLAND`. La hora usa la **zona horaria del sistema** (comportamiento por defecto de `Qt` / `Date`, sin override de locale). Sin datos extra (uptime/kernel): limpia.
 - **Power box (abajo-derecha):** caja agrupada con 3 íconos Nerd Font (⏻ apagar · ⟳ reiniciar · ☾ suspender), divisores verticales y estado hover.
 
 ### Lluvia de código
@@ -120,12 +120,12 @@ UIFont="JetBrainsMono Nerd Font Mono"
 RainFps="30"
 RainDensity="14"
 ClockOpacity="0.75"
-HeaderText="root@arch:~$ login"
-FooterText="[ wake up, Neo... ]"
-HourFormat="HH:mm"
+HourFormat="HH:mm"          # 24h, zona horaria del sistema
 DateFormat="ddd dd MMM"
 SessionLabel="HYPRLAND"
 ```
+
+> **`HeaderText` (`root@arch:~$ login`) y `FooterText` (`[ wake up, Neo... ]`) NO se exponen en `theme.conf` en v1.** Se definen como propiedades QML con valor por defecto en `LoginForm.qml`. Quedan estructurados para promoverse a `theme.conf` (como las claves comentadas arriba) cuando se quieran hacer configurables — sin refactor, solo cablear la lectura.
 
 `metadata.desktop`:
 ```ini
