@@ -105,10 +105,75 @@ Rectangle {
             ComboBox {
                 id: sessionSelect
                 Layout.preferredWidth: 150
+                Layout.preferredHeight: 34
                 font.family: config.UIFont
                 model: sessionModel
                 textRole: "name"
                 currentIndex: sessionModel.lastIndex
+
+                contentItem: Text {
+                    text: sessionSelect.displayText
+                    color: form.accent
+                    font.family: config.UIFont
+                    font.pointSize: 12
+                    verticalAlignment: Text.AlignVCenter
+                    leftPadding: 10
+                    rightPadding: 24
+                    elide: Text.ElideRight
+                }
+
+                indicator: Text {
+                    x: sessionSelect.width - width - 8
+                    y: (sessionSelect.height - height) / 2
+                    text: ""
+                    font.family: config.UIFont
+                    font.pointSize: 11
+                    color: form.accent
+                }
+
+                background: Rectangle {
+                    color: config.InputBackground || "#001400"
+                    border.color: sessionSelect.activeFocus ? form.accent : (config.InputBorder || "#00aa2a")
+                    border.width: 1
+                    radius: 0
+                }
+
+                delegate: ItemDelegate {
+                    width: sessionSelect.width
+                    height: 32
+                    highlighted: sessionSelect.highlightedIndex === index
+                    contentItem: Text {
+                        text: model.name
+                        color: form.accent
+                        font.family: config.UIFont
+                        font.pointSize: 12
+                        verticalAlignment: Text.AlignVCenter
+                        leftPadding: 8
+                    }
+                    background: Rectangle {
+                        color: parent.highlighted ? Qt.rgba(0, 1, 0.25, 0.18)
+                                                  : (config.InputBackground || "#001400")
+                    }
+                }
+
+                popup: Popup {
+                    y: sessionSelect.height
+                    width: sessionSelect.width
+                    implicitHeight: contentItem.implicitHeight
+                    padding: 1
+                    contentItem: ListView {
+                        clip: true
+                        implicitHeight: contentHeight
+                        model: sessionSelect.popup.visible ? sessionSelect.delegateModel : null
+                        currentIndex: sessionSelect.highlightedIndex
+                    }
+                    background: Rectangle {
+                        color: config.InputBackground || "#001400"
+                        border.color: form.accent
+                        border.width: 1
+                        radius: 0
+                    }
+                }
             }
 
             Button {

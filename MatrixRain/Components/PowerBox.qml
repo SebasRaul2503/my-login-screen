@@ -24,10 +24,11 @@ Rectangle {
         Repeater {
             model: row.actions
             delegate: Rectangle {
-                visible: modelData.enabled
                 width: 50
                 height: 42
-                color: hover.containsMouse ? Qt.rgba(0, 1, 0.25, 0.12) : "transparent"
+                // Always visible; dimmed (and non-clickable) when the action is unavailable.
+                opacity: modelData.enabled ? 1.0 : 0.3
+                color: (modelData.enabled && hover.containsMouse) ? Qt.rgba(0, 1, 0.25, 0.12) : "transparent"
 
                 Rectangle {
                     visible: index > 0
@@ -49,6 +50,7 @@ Rectangle {
                     id: hover
                     anchors.fill: parent
                     hoverEnabled: true
+                    enabled: modelData.enabled
                     onClicked: {
                         if (modelData.kind === "off") sddm.powerOff()
                         else if (modelData.kind === "reboot") sddm.reboot()
