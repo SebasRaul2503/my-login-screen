@@ -41,6 +41,13 @@ Pane {
             anchors.centerIn: parent
             z: 2
         }
-        // SLOT-POWER
+        PowerBox {
+            id: powerBox
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.rightMargin: 40
+            anchors.bottomMargin: 40
+            z: 1
+        }
     }
 }
