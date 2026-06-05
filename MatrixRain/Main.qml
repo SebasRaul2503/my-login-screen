@@ -29,7 +29,11 @@ Pane {
             z: 0
         }
         // SLOT-CLOCK
-        // SLOT-LOGIN
+        LoginForm {
+            id: loginForm
+            anchors.centerIn: parent
+            z: 2
+        }
         // SLOT-POWER
     }
 }
