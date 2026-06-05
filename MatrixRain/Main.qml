@@ -35,11 +35,27 @@ Pane {
             anchors.leftMargin: 40
             anchors.topMargin: 40
             z: 1
+            layer.enabled: true
+            layer.effect: Glow {
+                radius: 6
+                samples: 13
+                color: "#00ff41"
+                spread: 0.1
+                transparentBorder: true
+            }
         }
         LoginForm {
             id: loginForm
             anchors.centerIn: parent
             z: 2
+            layer.enabled: true
+            layer.effect: Glow {
+                radius: 12
+                samples: 25
+                color: "#00ff41"
+                spread: 0.2
+                transparentBorder: true
+            }
         }
         PowerBox {
             id: powerBox
@@ -48,6 +64,14 @@ Pane {
             anchors.rightMargin: 40
             anchors.bottomMargin: 40
             z: 1
+            layer.enabled: true
+            layer.effect: Glow {
+                radius: 8
+                samples: 17
+                color: "#00ff41"
+                spread: 0.15
+                transparentBorder: true
+            }
         }
     }
 }
