@@ -23,7 +23,11 @@ Pane {
             color: config.BackgroundColor
         }
 
-        // SLOT-RAIN
+        MatrixRain {
+            id: matrixRain
+            anchors.fill: parent
+            z: 0
+        }
         // SLOT-CLOCK
         // SLOT-LOGIN
         // SLOT-POWER
