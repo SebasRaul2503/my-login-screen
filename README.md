@@ -3,7 +3,12 @@
 Pantalla de login estilo "Matrix hacker clásico": lluvia de katakana verde sobre
 negro, cajas estilo terminal con glow. Tema QML para **SDDM** (Qt5).
 
-![concepto](docs/superpowers/specs/2026-06-04-matrix-sddm-login-design.md)
+![MatrixRain en sddm-greeter --test-mode](docs/screenshots/matrixrain.png)
+
+> Captura real del greeter (`sddm-greeter --test-mode`). Para regenerarla:
+> `sddm-greeter --test-mode --theme ./MatrixRain` y captura con `grim -o <salida>`.
+
+← Volver al [índice de temas](https://github.com/SebasRaul2503/my-login-screen/tree/main) (rama `main`).
 
 ## Requisitos
 
