@@ -1,101 +1,106 @@
-# my-login-screen — Temas de login SDDM para Arch + Hyprland
+# Outrun — Tema SDDM (atardecer synthwave en tiempo real) para Arch + Hyprland
 
-Colección de **temas SDDM** hechos a mano en QML. Cada tema vive en **su propia
-rama** para mantenerlos aislados entre sí; esta rama `main` es solo el **índice**
-que te lleva al tema correcto.
+Pantalla de login **synthwave / outrun** renderizada en vivo con un *fragment
+shader* GLSL: **sol retro con scanlines**, cielo índigo→magenta, y una **rejilla
+de neón en perspectiva que corre hacia ti** con las vías cian convergiendo bajo el
+sol. 1985, sin frenos. Tema QML para **SDDM** (Qt5).
 
-> 👉 Elige un tema en la tabla y cambia a su rama. `main` no contiene ningún tema
-> instalable: solo este índice y la documentación de diseño en `docs/superpowers/`.
+![Outrun en sddm-greeter --test-mode](docs/screenshots/outrun.png)
 
-## Temas disponibles
+> Captura real del greeter (`sddm-greeter --test-mode`). Para regenerarla:
+> `sddm-greeter --test-mode --theme ./Outrun` y captura con `grim -o <salida>`.
 
-| Tema | Vista previa | Rama | Estado |
-|---|---|---|---|
-| **MatrixRain** — lluvia de katakana verde sobre negro, cajas estilo terminal con glow | [![MatrixRain](docs/screenshots/matrixrain.png)](https://github.com/SebasRaul2503/my-login-screen/tree/feat/matrixrain-theme) | [`feat/matrixrain-theme`](https://github.com/SebasRaul2503/my-login-screen/tree/feat/matrixrain-theme) | ✅ funcional |
-| **Singularity** — agujero negro gravitacional en tiempo real (fragment shader GLSL) + consola HUD | [![Singularity](docs/screenshots/singularity.png)](https://github.com/SebasRaul2503/my-login-screen/tree/feat/singularity-theme) | [`feat/singularity-theme`](https://github.com/SebasRaul2503/my-login-screen/tree/feat/singularity-theme) | ✅ funcional |
+← Volver al [índice de temas](https://github.com/SebasRaul2503/my-login-screen/tree/main) (rama `main`).
 
-## Convención: todos los temas comparten la misma estructura
-
-**Regla del repo:** cada tema sigue *exactamente* la misma estructura de archivos
-que el tema de referencia (**MatrixRain**) y expone *exactamente* los mismos pasos
-de instalación. Lo único que cambia entre temas es el **nombre del tema** y el
-contenido visual de los `.qml`. Esto hace que aprender a instalar un tema sirva
-para instalar todos.
-
-Sustituye `<Tema>` por el nombre del tema (p. ej. `MatrixRain`) en todo lo que sigue.
-
-### Estructura obligatoria de cada rama de tema
-
-```
-<rama feat/<tema>-theme>
-├── README.md                       # mismo guion de secciones (ver abajo)
-├── install.sh                      # copia <Tema>/ a /usr/share/sddm/themes/ (NO activa)
-├── uninstall.sh                    # revierte al fallback y borra <Tema>/
-├── docs/
-│   ├── screenshots/<tema>.png      # captura real del greeter
-│   └── superpowers/                # specs y planes (compartidos desde main)
-└── <Tema>/
-    ├── metadata.desktop            # registro del tema en SDDM
-    ├── theme.conf                  # parámetros configurables
-    ├── Main.qml                    # raíz: fondo + cajas
-    └── Components/
-        └── *.qml                   # componentes (rain, login, reloj, power, inputs…)
-```
-
-El `README.md` de cada tema sigue **siempre las mismas secciones, en este orden**:
-`Requisitos` → `Probar sin instalar` → `Instalar` → `Activar (con red de
-seguridad)` → `Revertir / desinstalar` → `Personalización rápida` → `Estructura`.
-
-### Pasos de instalación — idénticos para cualquier tema
-
-Estos pasos no cambian entre temas; solo cambia `<Tema>`. Son los mismos que
-implementan `install.sh` / `uninstall.sh` de cada rama.
+## Requisitos
 
 ```bash
-# 0. Clonar y cambiar a la rama del tema
-git clone https://github.com/SebasRaul2503/my-login-screen.git
-cd my-login-screen
-git switch feat/<tema>-theme
+sudo pacman -S ttf-jetbrains-mono-nerd
+```
 
-# 1. Requisitos: instalar las fuentes/paquetes que liste el README del tema
-#    (varían por tema; el resto de pasos no)
+- `ttf-jetbrains-mono-nerd` → texto e íconos de la UI (JetBrainsMono Nerd Font Mono).
+- **OpenGL funcional** en el greeter (cualquier driver Mesa/propietario sirve): el
+  fondo es un *fragment shader*. SDDM/Qt5 ya lo usan; no instalas nada extra.
 
-# 2. Probar sin instalar (seguro, no toca el sistema)
-sddm-greeter --test-mode --theme ./<Tema>      # Ctrl+C para salir
+Sin fuentes CJK: el sol, la rejilla, las estrellas y el reflejo son procedurales.
 
-# 3. Instalar (copia <Tema>/ a /usr/share/sddm/themes/, NO activa)
+## Probar sin instalar (seguro, no toca el sistema)
+
+```bash
+sddm-greeter --test-mode --theme ~/tests/arch/login/Outrun
+```
+(`Ctrl+C` o cerrar la ventana para salir)
+
+## Instalar
+
+```bash
 ./install.sh
+```
+Copia `Outrun/` a `/usr/share/sddm/themes/` (pide `sudo`). **No** activa el tema.
 
-# 4. Activar — SIEMPRE con una TTY de respaldo abierta (Ctrl+Alt+F2)
-sudo sed -i 's/^Current=.*/Current=<Tema>/' /etc/sddm.conf.d/kde_settings.conf
-sudo systemctl restart sddm                    # ejecútalo desde la TTY de respaldo
+## Activar (con red de seguridad)
 
-# 5. Revertir / desinstalar (desde la TTY de respaldo si algo falla)
-./uninstall.sh                                 # vuelve al fallback y borra <Tema>/
+1. Abre una **TTY de respaldo**: `Ctrl+Alt+F2`, inicia sesión en texto y déjala abierta.
+   (Vuelves al escritorio con `Ctrl+Alt+F1` o tu VT gráfico.)
+2. Activa el tema:
+   ```bash
+   sudo sed -i 's/^Current=.*/Current=Outrun/' /etc/sddm.conf.d/kde_settings.conf
+   ```
+3. Aplica reiniciando SDDM **desde la TTY de respaldo** (esto cierra la sesión gráfica):
+   ```bash
+   sudo systemctl restart sddm
+   ```
+
+## Revertir / desinstalar
+
+Si algo sale mal, desde la TTY de respaldo:
+
+```bash
+./uninstall.sh        # vuelve a Candy y borra Outrun
 sudo systemctl restart sddm
 ```
 
-> **Red de seguridad (igual para todo tema):** activa siempre con una TTY de
-> respaldo abierta (`Ctrl+Alt+F2`, inicia sesión en texto y déjala abierta). Así,
-> si el tema falla, puedes ejecutar `./uninstall.sh` sin quedarte sin login.
-> El detalle exacto (fallback, comandos de revertir) está en el README de cada tema.
+O solo cambiar el tema activo de vuelta:
+```bash
+sudo sed -i 's/^Current=Outrun/Current=Candy/' /etc/sddm.conf.d/kde_settings.conf
+```
 
-## Añadir un tema nuevo
+## Personalización rápida
 
-Para que el repo se mantenga consistente, todo tema nuevo respeta la convención de
-arriba:
+Edita `Outrun/theme.conf` (o el instalado en `/usr/share/sddm/themes/Outrun/theme.conf`):
 
-1. Parte de `main` y crea una rama `feat/<tema>-theme`.
-2. Crea el directorio `<Tema>/` con la **misma estructura obligatoria**
-   (`metadata.desktop`, `theme.conf`, `Main.qml`, `Components/*.qml`).
-3. Copia `install.sh` / `uninstall.sh` del tema de referencia y cambia solo el
-   nombre del tema (y el fallback si aplica). **No** cambies los pasos.
-4. Escribe `README.md` con **las mismas secciones en el mismo orden** y añade una
-   captura real en `docs/screenshots/<tema>.png`.
-5. Vuelve a `main` y agrega una fila a la tabla de [Temas disponibles](#temas-disponibles)
-   apuntando a la rama.
+| Clave | Qué controla |
+|---|---|
+| `Accent` | Magenta de neón / UI principal (`#ff4fd8`) |
+| `Accent2` | Cian de neón: vías de la rejilla, etiquetas (`#41f0ff`) |
+| `SunTop` | Color superior del sol (amarillo `#ffe24a`) |
+| `SunBot` | Color inferior del sol (rosa `#ff2e8e`) |
+| `GridSpeed` | Velocidad a la que la rejilla corre hacia ti |
+| `UIFont` | Fuente de la UI (Nerd Font para los íconos de power) |
+| `HourFormat` / `DateFormat` | Formato de hora (24h) y fecha |
+| `SessionLabel` | Etiqueta junto a la fecha (`HYPRLAND`) |
+| `Wordmark` / `Tagline` | Título y subtítulo del panel de acceso |
+| `Footer` | Línea easter-egg bajo el botón |
+| `LoginLabel` | Texto del botón de acceso (`ARRANCAR`) |
 
-## Documentación de diseño
+> La escena (sol con scanlines, rejilla en perspectiva, reflejo, estrellas) vive en
+> `Outrun/Components/Synthwave.qml`, dentro del *fragment shader* — todo procedural,
+> sin imágenes.
 
-Specs y planes detallados (compartidos por todas las ramas) en
-[`docs/superpowers/`](docs/superpowers/).
+## Estructura
+
+```
+Outrun/
+├── metadata.desktop          # registro del tema
+├── theme.conf                # parámetros configurables
+├── Main.qml                  # raíz: escena + cajas
+└── Components/
+    ├── Synthwave.qml         # atardecer outrun — fragment shader GLSL (Canvas-free)
+    ├── CornerTicks.qml       # esquinas reutilizables del panel
+    ├── TerminalInput.qml     # campo de texto
+    ├── LoginForm.qml         # panel de acceso (auth SDDM)
+    ├── ClockBox.qml          # reloj
+    └── PowerBox.qml          # acciones de energía
+```
+
+Diseño y plan detallados en `docs/superpowers/`.
