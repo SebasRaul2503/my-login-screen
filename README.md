@@ -13,6 +13,8 @@ que te lleva al tema correcto.
 |---|---|---|---|
 | **MatrixRain** — lluvia de katakana verde sobre negro, cajas estilo terminal con glow | [![MatrixRain](docs/screenshots/matrixrain.png)](https://github.com/SebasRaul2503/my-login-screen/tree/feat/matrixrain-theme) | [`feat/matrixrain-theme`](https://github.com/SebasRaul2503/my-login-screen/tree/feat/matrixrain-theme) | ✅ funcional |
 | **Singularity** — agujero negro gravitacional en tiempo real (fragment shader GLSL) + consola HUD | [![Singularity](docs/screenshots/singularity.png)](https://github.com/SebasRaul2503/my-login-screen/tree/feat/singularity-theme) | [`feat/singularity-theme`](https://github.com/SebasRaul2503/my-login-screen/tree/feat/singularity-theme) | ✅ funcional |
+| **Aurora** — aurora boreal en tiempo real (fragment shader GLSL): cortinas, montañas, lago que refleja | [![Aurora](docs/screenshots/aurora.png)](https://github.com/SebasRaul2503/my-login-screen/tree/feat/aurora-theme) | [`feat/aurora-theme`](https://github.com/SebasRaul2503/my-login-screen/tree/feat/aurora-theme) | ✅ funcional |
+| **Outrun** — atardecer synthwave en tiempo real (fragment shader GLSL): sol con scanlines + rejilla de neón | [![Outrun](docs/screenshots/outrun.png)](https://github.com/SebasRaul2503/my-login-screen/tree/feat/outrun-theme) | [`feat/outrun-theme`](https://github.com/SebasRaul2503/my-login-screen/tree/feat/outrun-theme) | ✅ funcional |
 
 ## Convención: todos los temas comparten la misma estructura
 
