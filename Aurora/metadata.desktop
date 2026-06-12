@@ -1,0 +1,11 @@
+[SddmGreeterTheme]
+Name=Aurora
+Description=Real-time aurora borealis login (GLSL shader)
+Author=Sebastian Castillo
+License=MIT
+Type=sddm-theme
+Version=1.0
+Theme-API=2.0
+MainScript=Main.qml
+ConfigFile=theme.conf
+Theme-Id=Aurora
